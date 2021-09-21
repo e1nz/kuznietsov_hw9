@@ -1,0 +1,33 @@
+version: "3"
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html/
+    networks:
+      - homenetwork
+
+  postgres:
+    image: postgres:12.1
+    restart: always
+    ports:
+      - "8081:5432"
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: pass
+    networks:
+      - homenetwork
+
+  adminer:
+    image: adminer:4.7.5
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - homenetwork
+
+networks:
+  homenetwork:
